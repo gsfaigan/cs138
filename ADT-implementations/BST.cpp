@@ -81,7 +81,6 @@ TreeNode* findMin(TreeNode* root) {
     return findMin(root->left);
 }
 
-
 TreeNode* deleteNode(TreeNode* root, int value) {
     if (root == nullptr) { return nullptr; }
 

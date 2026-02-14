@@ -13,32 +13,63 @@ struct Queue {
     int size;
 };
 
-Queue* createQueue() {
+bool isEmpty(Queue* q) {
+    return q->head == nullptr && q->tail == nullptr && q->size == 0;
+}
 
+Queue* createQueue() {
+    Queue *q = new Queue{nullptr, nullptr, 0};
+    assert(isEmpty(q));
+    return q;
 }
 
 void destroyQueue(Queue* q) {
-
+    Node *cur = q->head;
+    while (cur) {
+        Node *temp = cur->next;
+        delete cur;
+        cur = temp;
+    }
+    q->head = q->tail = nullptr;
+    q->size = 0;
+    delete q;
 }
 
 void enqueue(Queue* q, int value) {
-
+    Node *n = new Node{value, nullptr};
+    if (isEmpty(q)) {
+        q->head = q->tail = n;
+    } else {
+        q->tail->next = n;
+        q->tail = q->tail->next;
+    }
+    q->size++;
 }
 
 int dequeue(Queue* q) {
-
+    assert(!isEmpty(q));
+    Node *temp = q->head->next;
+    int output = q->head->data;
+    delete q->head;
+    q->head = temp;
+    if(!q->head) { q->tail = nullptr; }
+    q->size--;
+    return output;
 }
 
 int peek(Queue* q) {
-
-}
-
-bool isEmpty(Queue* q) {
-
+    assert(!isEmpty(q));
+    return q->head->data;
 }
 
 void print(Queue* q) {
-
+    Node *cur = q->head;
+    while (cur) {
+        cout << cur->data;
+        if (cur->next) { cout << "->"; }
+        cur = cur->next;
+    }
+    cout << endl;
 }
 
 int main() {

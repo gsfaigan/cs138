@@ -23,8 +23,6 @@ Stack* createStack() {
 }
 
 void destroyStack(Stack* s) {
-    if (isEmpty(s)) { return; }
-
     Node *cur = s->top;
     while (cur) {
         Node *temp = cur->next;
@@ -33,6 +31,7 @@ void destroyStack(Stack* s) {
     }
     s->top = nullptr;
     s->size = 0;
+    delete s;
 }
 
 void push(Stack* s, int value) {
@@ -59,7 +58,8 @@ int peek(Stack* s) {
 void print(Stack* s) {
     Node *cur = s->top;
     while(cur) {
-        cout << cur->data << " ";
+        cout << cur->data;
+        if (cur->next) { cout << "->"; }
         cur = cur->next;
     }
     cout << endl;
